@@ -1,0 +1,13 @@
+{
+  "manifest_version": 2,
+
+  "name": "Hubzilla",
+  "version": "0.1",
+
+  "content_scripts": [{
+    "matches": ["*://github.com/*"],
+    "css": ["custom.css"],
+    "js": ["content.js"],
+    "all_frames": true
+  }]
+}
