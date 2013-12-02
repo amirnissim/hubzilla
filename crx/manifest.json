@@ -5,7 +5,7 @@
   "version": "0.1",
 
   "content_scripts": [{
-    "matches": ["*://github.com/*"],
+    "matches": ["*://github.com/*", "*://bugzilla.mozilla.org/*"],
     "css": ["custom.css"],
     "js": ["content.js"],
     "all_frames": true
