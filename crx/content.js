@@ -1,16 +1,12 @@
 var MESSAGE_KEY = 'hubzilla_msg';
 var MESSAGE_REGEX = new RegExp(MESSAGE_KEY + '=(\.+)', 'ig');
 
-function onBugzillaPage() {
-  return window.location.href.indexOf("bugzilla") > -1;
-}
-function onGithubPage() {
-  return window.location.href.indexOf("github") > -1;
-}
+var onBugzillaPage = window.location.href.indexOf("bugzilla") > -1;
+var onGithubPage = window.location.href.indexOf("github") > -1;
 
-if (onBugzillaPage()) {
+if (onBugzillaPage) {
   bugzillaHandler();
-} else if (onGithubPage()) {
+} else if (onGithubPage) {
   githubHandler();
 }
 
@@ -20,7 +16,6 @@ if (onBugzillaPage()) {
 function bugzillaHandler() {
   var commentEl = document.getElementById('comment');
   console.log("hubzilla: welcome to bugzilla!");
-  debugger;
   var search = decodeURIComponent(document.location.search);
   var matches = MESSAGE_REGEX.exec(search);
   var message = matches && matches[1];
@@ -49,7 +44,7 @@ function githubHandler() {
   var SELECTOR_ACTION_EL = '.merge-branch-action';
 
   // parse bug id
-  var titleEl = document.querySelector('.discussion-topic-header .discussion-topic-title');
+  var titleEl = document.querySelector('.js-issue-title');
 
   if (titleEl) {
     var matches = BUGID_REGEX.exec(titleEl.innerText);
@@ -63,7 +58,7 @@ function githubHandler() {
     // link to bugzilla ticket in topic title
     // TODO traverse all text nodes:
     // http://stackoverflow.com/questions/2579666/getelementsbytagname-equivalent-for-textnodes
-    var elements = document.querySelectorAll('.discussion-topic-title, .commit-title');
+    var elements = [titleEl];
     for (var i = elements.length - 1; i >= 0; i--) {
       var el = elements[i];
       el.innerHTML = el.innerHTML.replace(BUGID_REGEX, '<a href="' + bugUrl + '">$&</a>');
