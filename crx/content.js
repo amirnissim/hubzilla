@@ -40,7 +40,7 @@ function githubHandler() {
   var BUGID_REGEX = /bug\s(\d+)/gi;
   var BUGZILLA_BASE_URL = 'https://bugzilla.mozilla.org/show_bug.cgi?id=';
 
-  var SELECTOR_HASH_EL = '.action-bubble-merged code';
+  var SELECTOR_HASH_EL = '.octicon-git-merge ~ code';
   var SELECTOR_ACTION_EL = '.merge-branch-action';
 
   // parse bug id
