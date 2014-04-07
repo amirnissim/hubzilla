@@ -11,7 +11,7 @@ if (onBugzillaPage) {
 }
 
 /**
- * executes on bugzilla pages
+ * runs on bugzilla pages
  */
 function bugzillaHandler() {
   var commentEl = document.getElementById('comment');
@@ -29,7 +29,7 @@ function bugzillaHandler() {
 
 
 /**
- * executes on github pages
+ * runs on github pages
  */
 function githubHandler() {
   console.log("hubzilla: welcome to github!");
@@ -40,7 +40,7 @@ function githubHandler() {
   var BUGID_REGEX = /bug\s(\d+)/gi;
   var BUGZILLA_BASE_URL = 'https://bugzilla.mozilla.org/show_bug.cgi?id=';
 
-  var SELECTOR_HASH_EL = '.octicon-git-merge ~ code';
+  var SELECTOR_HASH_EL = '.octicon-git-merge ~ a code';
   var SELECTOR_ACTION_EL = '.merge-branch-action';
 
   // parse bug id
@@ -80,31 +80,30 @@ function githubHandler() {
       });
     } else if (isDeletePage && hashEl) {
       console.log('hubzilla: delete branch page');
-      highlightHashEl();
-      hashEl.addEventListener('click', function() {
-        var hash = hashEl.innerText;
-        addLandedComment(hash);
-      });
+      bindCommitHashElement();
     }
 
     function waitForHashElement() {
       hashEl = document.querySelector(SELECTOR_HASH_EL);
       if (hashEl) {
         console.log('hash found: ');
-        var hash = hashEl.innerText;
-        highlightHashEl();
-        hashEl.addEventListener('click', function() {
-          addLandedComment(hash);
-        });
+        bindCommitHashElement();
       } else {
         console.log('waiting for commit...');
         setTimeout(waitForHashElement, 1000);
       }
     }
 
-    function highlightHashEl() {
+    function bindCommitHashElement() {
       hashEl.style.cursor = 'pointer';
       hashEl.style.background = 'yellow';
+
+      hashEl.addEventListener('click', function(e) {
+        var hash = hashEl.innerText;
+
+        e.preventDefault();
+        addLandedComment(hash);
+      });
     }
 
     function addLandedComment(hash) {
