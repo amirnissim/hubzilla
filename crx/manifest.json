@@ -7,7 +7,7 @@
   "content_scripts": [{
     "matches": ["*://github.com/*", "*://bugzilla.mozilla.org/*"],
     "css": ["custom.css"],
-    "js": ["content.js"],
+    "js": ["js/hubzilla.js", "js/bugzilla.js", "js/github.js", "js/content.js"],
     "all_frames": true
   }]
 }
