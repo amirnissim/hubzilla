@@ -19,7 +19,7 @@ Hubzilla.githubHandler.init = function init() {
 
   if (titleEl) {
     var matches = BUGID_REGEX.exec(titleEl.innerText);
-    bugId = matches[1];
+    bugId = matches && matches[1];
     if (bugId) {
       bugUrl = BUGZILLA_BASE_URL + bugId;
     }
